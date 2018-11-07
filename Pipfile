@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"e1839a8" = {editable = true, path = "."}
+
+[dev-packages]
+pytest = "*"
+pytest-spec = "*"
+pytest-cov = "*"
+"flake8" = "*"
+isort = "*"
+pluggy = "*"
+requests = "*"
+ipython = "*"
+
+[requires]
+python_version = "3.6"
