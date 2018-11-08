@@ -27,7 +27,7 @@ To install Flinks, please use pip_ (or pipenv_) as follows:
 
 .. code-block:: shell
 
-    $ pip install flinks --pre
+    $ pip install --pre flinks
 
 Basic usage
 -----------
