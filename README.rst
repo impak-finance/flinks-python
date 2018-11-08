@@ -1,6 +1,21 @@
 flinks-python
 =============
 
+.. image:: https://readthedocs.org/projects/flinks-python/badge/?version=latest
+    :target: https://flinks-python.readthedocs.io/en/latest/
+    :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/l/flinks-python.svg
+    :target: https://pypi.python.org/pypi/flinks-python/
+    :alt: License
+
+.. image:: https://img.shields.io/pypi/pyversions/flinks-python.svg
+    :target: https://pypi.python.org/pypi/flinks-python
+
+.. image:: https://img.shields.io/pypi/v/flinks-python.svg
+    :target: https://pypi.python.org/pypi/flinks-python/
+    :alt: Latest Version
+
 .. image:: https://travis-ci.org/impak-finance/flinks-python.svg?branch=master
     :target: https://travis-ci.org/impak-finance/flinks-python
 
