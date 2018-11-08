@@ -189,9 +189,9 @@ class BankingServices(BaseApi):
         """
         data = {'RequestId': request_id, }
         if number_of_statements:
-            data['number_of_statements'] = number_of_statements
+            data['NumberOfStatements'] = number_of_statements
         if accounts_filter:
-            data['accounts_filter'] = accounts_filter
+            data['AccountsFilter'] = accounts_filter
         return self._client._call('POST', self._build_path('GetStatements'), data=data)
 
     def get_statements_async(self, request_id):
