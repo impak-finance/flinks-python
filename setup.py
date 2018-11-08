@@ -15,13 +15,13 @@ def read_relative_file(filename):
 
 
 setup(
-    name='impak-flinks',
+    name='flinks',
     version=flinks.__version__,
     author='impak Finance',
     author_email='tech@impakfinance.com',
     packages=find_packages(exclude=['tests.*', 'tests']),
     include_package_data=True,
-    url='https://github.com/impak-finance/impak-flinks-python',
+    url='https://github.com/impak-finance/flinks-python',
     license='MIT',
     description='A Python module for communicating with the Flinks.io API.',
     long_description=read_relative_file('README.rst'),

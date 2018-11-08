@@ -17,7 +17,7 @@ To install Flinks, please use pip_ (or pipenv_) as follows:
 
 .. code-block:: shell
 
-    $ pip install impak-flinks
+    $ pip install flinks --pre
 
 Basic usage
 -----------
