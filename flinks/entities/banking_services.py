@@ -22,7 +22,8 @@ class BankingServices(BaseApi):
 
     def authorize(
         self, most_recent_cached=False, request_id=None, login_id=None, institution=None,
-        username=None, password=None, save=None, security_responses=None, tag=None,
+        username=None, password=None, save=None, security_responses=None, schedule_refresh=None,
+        tag=None,
     ):
         """ Exchanges credentials for a LoginId and RequestId.
 
@@ -35,6 +36,7 @@ class BankingServices(BaseApi):
         :param password: bank account password
         :param save: whether or not to save user's credentials on the Flinks side
         :param security_responses: dictionary of security responses and answers
+        :param schedule_refresh: indicates whether to automate refreshes of the user's data
         :param tag: custom value to associate with the generated request ID
         :type most_recent_cached: bool
         :type request_id: str
@@ -44,6 +46,7 @@ class BankingServices(BaseApi):
         :type password: str
         :type save: bool
         :type security_responses: dict
+        :type schedule_refresh: bool
         :type tag: str
         :return: dictionary containing the authorization response
         :rtype: dictionary
@@ -63,6 +66,8 @@ class BankingServices(BaseApi):
             data['Save'] = save
         if security_responses is not None:
             data['SecurityResponses'] = security_responses
+        if schedule_refresh is not None:
+            data['ScheduleRefresh'] = schedule_refresh
         if tag is not None:
             data['Tag'] = tag
         return self._client._call('POST', self._build_path('Authorize'), data=data)
@@ -150,7 +155,7 @@ class BankingServices(BaseApi):
 
         :param request_id: valid request ID
         :type request_id: str
-        :return: dictionary containing the complete details of the user
+        :return: dictionary containing the result of the operation
         :rtype: dictionary
 
         """
@@ -161,8 +166,80 @@ class BankingServices(BaseApi):
 
         :param login_id: valid login ID
         :type login_id: str
-        :return: dictionary containing the complete details of the user
+        :return: dictionary containing the result of the deletion operation
         :rtype: dictionary
 
         """
         return self._client._call('DELETE', self._build_path('DeleteCard/' + login_id))
+
+    def get_statements(self, request_id, number_of_statements=None, accounts_filter=None):
+        """ Retrieves the Official PDF Bank statements of an account.
+
+        :param request_id: valid request ID
+        :param number_of_statements:
+            a string identifying the number of statements to retrieve per account (eg. 'MostRecent',
+            'Months3', 'Months12')
+        :param accounts_filter: list of user account IDs to target specificaly
+        :type request_id: str
+        :type number_of_statements: str
+        :type accounts_filter: list
+        :return: dictionary containing the statements
+        :rtype: dictionary
+
+        """
+        data = {'RequestId': request_id, }
+        if number_of_statements:
+            data['number_of_statements'] = number_of_statements
+        if accounts_filter:
+            data['accounts_filter'] = accounts_filter
+        return self._client._call('POST', self._build_path('GetStatements'), data=data)
+
+    def get_statements_async(self, request_id):
+        """ Retrieves the Official PDF Bank statements of an account (async mode).
+
+        :param request_id: valid request ID
+        :type request_id: str
+        :return: dictionary containing the result of the operation
+        :rtype: dictionary
+
+        """
+        return self._client._call('GET', self._build_path('GetStatementsAsync/' + request_id))
+
+    def get_mfa_questions(self, login_id):
+        """ Retrieves the user's security questions that could've been stored.
+
+        :param login_id: valid login ID
+        :type login_id: str
+        :return: dictionary containing the result of the operation and the MFA questions if any
+        :rtype: dictionary
+
+        """
+        return self._client._call('GET', self._build_path('GetMFAQuestions/' + login_id))
+
+    def set_mfa_questions(self, login_id, questions):
+        """ Saves security questions and answers for a specific user.
+
+        :param login_id: valid login ID
+        :param questions: list of dictionaries containing a 'Question' key and an 'Answer' key
+        :type login_id: str
+        :type questions: list
+        :return: dictionary containing the result of the operation
+        :rtype: dictionary
+
+        """
+        data = {'LoginId': login_id, 'Questions': questions, }
+        return self._client._call('PATCH', self._build_path('AnswerMFAQuestions'), data=data)
+
+    def set_scheduled_refresh(self, login_id, is_activated=True):
+        """ Deactivates or activates automatic refresh of users' data.
+
+        :param login_id: valid login ID
+        :param is_activated: boolean indicating whether to activate refreshes or deactivate them
+        :type login_id: str
+        :type is_activated: bool
+        :return: string containing the result of the operation
+        :rtype: str
+
+        """
+        data = {'LoginId': login_id, 'IsActivated': is_activated, }
+        return self._client._call('PATCH', self._build_path('SetScheduledRefresh'), data=data)
