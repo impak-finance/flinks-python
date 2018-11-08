@@ -18,7 +18,7 @@
 # 7. run "git push" and "git push --tags"
 
 
-__version__ = '0.1.0.dev0'
+__version__ = '0.1.0a1'
 
 
 from .client import Client  # noqa: F401
