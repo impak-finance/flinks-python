@@ -1,6 +1,14 @@
 flinks-python
 =============
 
+.. image:: https://travis-ci.org/impak-finance/flinks-python.svg?branch=master
+    :target: https://travis-ci.org/impak-finance/flinks-python
+
+.. image:: https://codecov.io/gh/impak-finance/flinks-python/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/impak-finance/flinks-python
+
+|
+
 **Flinks-python** is a Python module for communicating with the
 `Flinks.io API <https://sandbox.flinks.io/documentation/>`_.
 
