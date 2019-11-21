@@ -40,6 +40,7 @@ class Client:
 
         # Set up entities attributes.
         self._banking_services = None
+        self._attributes = None
 
         ###################
         # FLINKS ENTITIES #
@@ -58,6 +59,18 @@ class Client:
             self._banking_services = BankingServices(self)
         return self._banking_services
 
+    @property
+    def attributes(self):
+        """ Allows to access the attributes entity.
+
+        :return: :class:`Attribute <Attribute>` object
+        :rtype: flinks.entities.attributes.Attribute
+
+        """
+        if self._attributes is None:
+            from .entities.attributes import Attribute
+            self._attributes = Attribute(self)
+        return self._attributes
         ##################################
         # PRIVATE METHODS AND PROPERTIES #
         ##################################
